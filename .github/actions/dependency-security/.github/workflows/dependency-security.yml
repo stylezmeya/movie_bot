@@ -1,1 +1,21 @@
+name: Bog‘liqliklar xavfsizligi
 
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/dependency-security
+        with:
+          path: .
+          severity-cutoff: high
+          fail-build: "true"
